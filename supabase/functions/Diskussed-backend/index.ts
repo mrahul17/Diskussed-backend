@@ -1,23 +1,18 @@
-// Follow this setup guide to integrate the Deno language server with your editor:
-// https://deno.land/manual/getting_started/setup_your_environment
-// This enables autocomplete, go to definition, etc.
-
 import { serve } from 'https://deno.land/std@0.131.0/http/server.ts'
+import { createClient } from "https://esm.sh/@supabase/supabase-js@1.33.1";
 import { corsHeaders } from './cors.ts'
-
-console.log(`Function "browser-with-cors" up and running!`)
+console.log()
 
 serve(async (req) => {
-  // This is needed if you're planning to invoke your function from a browser.
   if (req.method === 'OPTIONS') {
     return new Response('ok', { headers: corsHeaders })
   }
-
+  const SUPABASE_URL = Deno.env.get("SUPABASE_URL") ?? "";
+  const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+  const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
   try {
     const { url } = await req.json()
-    const data = {
-      message: `Hello ${url}!`,
-    }
+    const { data } = await supabase.from("discussions").select('url').eq('discussed_url', url);
 
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
