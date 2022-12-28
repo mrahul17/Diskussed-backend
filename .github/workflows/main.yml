@@ -3,7 +3,7 @@ name: Fetch New Discussions
 on:
   schedule:
     # Runs "at minute 55 past every hour" (see https://crontab.guru)
-    - cron: '15 * * * *'
+    - cron: '50 11 * * *'
 jobs:
   build:
     runs-on: ubuntu-latest
