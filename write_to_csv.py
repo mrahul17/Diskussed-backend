@@ -34,7 +34,7 @@ while days < 10:
         # go back a date
         days+=1
         print(soup.find_all('span', {"class": "hnmore"}))
-        if !len(soup.find_all('span', {"class": "hnmore"})):
+        if not len(soup.find_all('span', {"class": "hnmore"})):
             print(page)
         path = soup.find_all('span', {"class": "hnmore"})[0].a.attrs['href']
 
