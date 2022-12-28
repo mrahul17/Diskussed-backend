@@ -11,9 +11,8 @@ serve(async (req) => {
   const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   const supabase = createClient(SUPABASE_URL, SERVICE_KEY);
   try {
-    const { url } = await req.json()
-    const { data } = await supabase.from("discussions").select('url').eq('discussed_url', url);
-
+    const { hashedUrl } = await req.json()
+    const { data } = await supabase.from("discussions").select('url').eq('hashed_discussed_url', hashedUrl);
     return new Response(JSON.stringify(data), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
