@@ -1,5 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
+import time
 
 START_DATE = '2022-12-27'
 
@@ -9,6 +10,7 @@ DATA = []
 days = 1
 
 while days < 10:
+    time.sleep(2)
     print("Path " + path)
     page = requests.get('https://news.ycombinator.com/' + path)
     soup = BeautifulSoup(page.text)
@@ -23,7 +25,7 @@ while days < 10:
     if len(more_link):
         path = more_link[0].attrs['href']
     else:
-        # go back a page
+        # go back a date
         days+=1
         print(soup.find_all('span', {"class": "hnmore"}))
         path = soup.find_all('span', {"class": "hnmore"})[0].a.attrs['href']
