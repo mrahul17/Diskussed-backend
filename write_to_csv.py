@@ -30,9 +30,11 @@ while days < 10:
             DATA.append([storyId, storyUrl])
     more_link = soup.body.center.table.find_all('a', {"class": "morelink"})
     if len(more_link):
+        print("morelink found, will do pagination")
         path = more_link[0].attrs['href']
     else:
         # go back a date
+        print("morelink not found, will go to previous date")
         days+=1
         print(soup.find_all('span', {"class": "hnmore"}))
         if not len(soup.find_all('span', {"class": "hnmore"})):
