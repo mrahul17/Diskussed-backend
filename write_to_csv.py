@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import time
+from random import randrange
 
 START_DATE = '2022-12-27'
 
@@ -10,7 +11,7 @@ DATA = []
 days = 1
 
 while days < 10:
-    time.sleep(2)
+    time.sleep(randrange(6))
     print("Path " + path)
     page = ''
     try:
