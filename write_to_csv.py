@@ -12,7 +12,13 @@ days = 1
 while days < 10:
     time.sleep(2)
     print("Path " + path)
-    page = requests.get('https://news.ycombinator.com/' + path)
+    page = ''
+    try:
+        page = requests.get('https://news.ycombinator.com/' + path)
+    except:
+        print(page.status_code)
+        raise Exception(page.status_code)
+    
     soup = BeautifulSoup(page.text)
     stories = soup.body.center.table.find_all('tr', {"class": "athing"})
     for story in stories:
@@ -28,6 +34,8 @@ while days < 10:
         # go back a date
         days+=1
         print(soup.find_all('span', {"class": "hnmore"}))
+        if(!len(soup.find_all('span', {"class": "hnmore"}))):
+            print(page)
         path = soup.find_all('span', {"class": "hnmore"})[0].a.attrs['href']
 
 print(DATA)
