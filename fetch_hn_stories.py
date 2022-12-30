@@ -14,7 +14,7 @@ def get_max_id():
     return requests.get(MAX_ID_API).json()
 
 def get_last_id_stored():
-    QUERY_CURSOR.execute("SELECT url from discussions_v4 order by id desc limit 1")
+    QUERY_CURSOR.execute("SELECT url from discussions order by id desc limit 1")
     last_url = QUERY_CURSOR.fetchone()[0]
     return int(last_url.split("=")[1])
     
@@ -25,7 +25,7 @@ def get_url_from_story(id):
         return item['url']
 
 def store_in_db(data):
-    insert_sql = "INSERT INTO discussions_v4 (url, discussed_url) VALUES (%s, %s)"
+    insert_sql = "INSERT INTO discussions (url, discussed_url) VALUES (%s, %s)"
     psycopg2.extras.execute_batch(QUERY_CURSOR, insert_sql, data, page_size=100)
     DB_CONNECTION.commit()
 
