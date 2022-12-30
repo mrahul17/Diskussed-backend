@@ -2,7 +2,7 @@ name: Fetch New Discussions
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '35 * * * *'
 
 jobs:
   build:
