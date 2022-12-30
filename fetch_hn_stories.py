@@ -25,7 +25,7 @@ def get_url_from_story(id):
         return item['url']
 
 def store_in_db(data):
-    insert_sql = "INSERT INTO discussions (url, discussed_url) VALUES (%s, %s)"
+    insert_sql = "INSERT INTO discussions (url, discussed_url) VALUES (%s, %s) ON CONFLICT(url) DO NOTHING"
     psycopg2.extras.execute_batch(QUERY_CURSOR, insert_sql, data, page_size=100)
     DB_CONNECTION.commit()
 
